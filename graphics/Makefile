@@ -129,6 +129,7 @@
      SUBDIR += leptonica
      SUBDIR += libart
      SUBDIR += libcaca
+     SUBDIR += libde265
      SUBDIR += libdmtx
      SUBDIR += libdvbpsi
      SUBDIR += libexif
