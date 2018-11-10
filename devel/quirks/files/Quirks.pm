@@ -1,7 +1,7 @@
 #! /usr/bin/perl
 
 # ex:ts=8 sw=4:
-# $OpenBSD: Quirks.pm,v 1.652 2018/11/04 21:39:46 danj Exp $
+# $OpenBSD: Quirks.pm,v 1.655 2018/11/09 21:22:17 jeremy Exp $
 #
 # Copyright (c) 2009 Marc Espie <espie@openbsd.org>
 #
@@ -1190,10 +1190,13 @@ my $cve = {
 	'mail/exim' => 'exim-<4.83',
 	'mail/p5-Mail-SpamAssassin' => 'p5-Mail-SpamAssassin-<3.4.2',
 	'mail/roundcubemail' => 'roundcubemail-<1.3.8',
-	'net/curl' => 'curl-<7.61.1',
+	'net/curl' => 'curl-<7.62.0',
 	'net/isc-bind' => 'isc-bind-<9.11.4pl2',
 	'net/lldpd' => 'lldpd-<0.7.18p0',
 	'net/ntp' => 'ntp-<4.2.8pl7',
+	'net/powerdns,-main' => 'powerdns-<4.1.5',
+	'net/powerdns,-mysql' => 'powerdns-mysql-<4.1.5',
+	'net/powerdns,-pgsql' => 'powerdns-pgsql-<4.1.5',
 	'net/samba,-main' => 'samba-<4.8.4',
 	'net/tinc' => 'tinc-<1.0.35v0',
 	'net/transmission,-gtk' => 'transmission-gtk-<2.84',
@@ -1217,6 +1220,8 @@ my $cve = {
 	'www/p5-CGI-Application' => 'p5-CGI-Application-<4.50p0',
 	'www/py-requests' => 'py-requests-<2.20.0',
 	'www/py-requests,python3' => 'py3-requests-<2.20.0',
+	'www/ruby-rack,ruby24' => 'ruby24-rack-<2.0.6',
+	'www/ruby-rack,ruby25' => 'ruby25-rack-<2.0.6',
 	'www/webkitgtk4' => 'webkitgtk4-<2.20.5',
 	'x11/gnome/gdm' => 'gdm-<3.28.3',
 };

@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.18 2018/01/11 19:27:11 rpe Exp $
+# $OpenBSD: Makefile,v 1.20 2018/11/07 07:54:29 espie Exp $
 
 COMMENT-main=	wrapper to run CGI applications via FastCGI
 COMMENT-static=	static-linked fcgi-cgi wrapper for chroot use
@@ -7,9 +7,8 @@ V=		0.2.2
 DISTNAME=	fcgi-cgi-$V
 PKGNAME-main=	fcgi-cgi-$V
 PKGNAME-static=	fcgi-cgi-static-$V
-REVISION=	0
 CATEGORIES=	www
-REVISION-main=	0
+REVISION=	1
 
 HOMEPAGE=	http://redmine.lighttpd.net/projects/fcgi-cgi/wiki
 
@@ -40,9 +39,8 @@ PREFIX-static=	${VARBASE}/www/${TRUEPREFIX}
 CONFIGURE_ENV=	CPPFLAGS="-I${LOCALBASE}/include" \
 		LDFLAGS="-L${LOCALBASE}/lib"
 
-post-patch:
-	cd ${WRKSRC}; AUTOCONF_VERSION=${AUTOCONF_VERSION} \
-	    AUTOMAKE_VERSION=${AUTOMAKE_VERSION} ./autogen.sh
+do-gen:
+	cd ${WRKSRC}; ${AUTOCONF_ENV} ./autogen.sh
 
 post-install:
 	${INSTALL_PROGRAM_DIR} ${WRKINST}${PREFIX-static}/bin

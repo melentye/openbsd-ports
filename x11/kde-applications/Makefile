@@ -1,26 +1,26 @@
-# $OpenBSD: Makefile,v 1.22 2018/09/04 05:31:36 rsadowski Exp $
+# $OpenBSD: Makefile,v 1.28 2018/11/09 07:09:20 rsadowski Exp $
 
      SUBDIR =
      #SUBDIR += kde-l10n
      #SUBDIR += akonadi
      SUBDIR += analitza
      SUBDIR += ark
-     #SUBDIR += artikulate
-     #SUBDIR += audiocd-kio
+     SUBDIR += artikulate
+     SUBDIR += audiocd-kio
      #SUBDIR += baloo
-     #SUBDIR += blinken
-     #SUBDIR += bomber
-     #SUBDIR += bovo
+     SUBDIR += blinken
+     SUBDIR += bomber
+     SUBDIR += bovo
      #SUBDIR += calendarsupport
      SUBDIR += cantor
-     #SUBDIR += cervisia
+     SUBDIR += cervisia
      SUBDIR += dolphin
      SUBDIR += dolphin-plugins
      SUBDIR += dragon
      #SUBDIR += eventviews
-     #SUBDIR += ffmpegthumbs
+     SUBDIR += ffmpegthumbs
      #SUBDIR += filelight
-     #SUBDIR += granatier
+     SUBDIR += granatier
      #SUBDIR += grantleetheme
      #SUBDIR += gwenview
      #SUBDIR += incidenceeditor
@@ -35,14 +35,14 @@
      #SUBDIR += kalzium
      #SUBDIR += kamera
      #SUBDIR += kanagram
-     #SUBDIR += kapman
+     SUBDIR += kapman
      #SUBDIR += kapptemplate
      SUBDIR += kate
-     #SUBDIR += katomic
-     #SUBDIR += kblackbox
-     #SUBDIR += kblocks
+     SUBDIR += katomic
+     SUBDIR += kblackbox
+     SUBDIR += kblocks
      #SUBDIR += kblog
-     #SUBDIR += kbounce
+     SUBDIR += kbounce
      #SUBDIR += kbreakout
      #SUBDIR += kbruch
      #SUBDIR += kcachegrind
@@ -88,7 +88,7 @@
      #SUBDIR += kigo
      #SUBDIR += killbots
      SUBDIR += kimap
-     #SUBDIR += kio-extras
+     SUBDIR += kio-extras
      #SUBDIR += kiriki
      #SUBDIR += kiten
      #SUBDIR += kjumpingcube
@@ -98,7 +98,7 @@
      #SUBDIR += klickety
      #SUBDIR += klines
      #SUBDIR += kmag
-     #SUBDIR += kmahjongg
+     SUBDIR += kmahjongg
      #SUBDIR += kmailtransport
      SUBDIR += kmbox
      SUBDIR += kmime
@@ -160,8 +160,8 @@
      #SUBDIR += kwalletmanager
      #SUBDIR += kwordquiz
      #SUBDIR += libgravatar
-     #SUBDIR += libkcddb
-     #SUBDIR += libkcompactdisc
+     SUBDIR += libkcddb
+     SUBDIR += libkcompactdisc
      SUBDIR += libkdcraw
      #SUBDIR += libkdegames
      #SUBDIR += libkdepim

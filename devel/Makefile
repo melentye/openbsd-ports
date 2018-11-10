@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1785 2018/11/06 12:20:35 danj Exp $
+# $OpenBSD: Makefile,v 1.1788 2018/11/08 04:27:58 bcallah Exp $
 
      SUBDIR =
      SUBDIR += ElectricFence
@@ -14,7 +14,9 @@
      SUBDIR += apr
      SUBDIR += apr-util
      SUBDIR += apr-util,ldap
+     SUBDIR += arduboy2
      SUBDIR += arduino
+     SUBDIR += arduino-makefile
      SUBDIR += argp-standalone
      SUBDIR += argtable
      SUBDIR += arm-elf
@@ -1479,6 +1481,8 @@
      SUBDIR += py-olefile
      SUBDIR += py-olefile,python3
      SUBDIR += py-optik
+     SUBDIR += py-parallel
+     SUBDIR += py-parallel,python3
      SUBDIR += py-parsedatetime
      SUBDIR += py-parsedatetime,python3
      SUBDIR += py-parsing
@@ -1738,6 +1742,8 @@
      SUBDIR += ruby-narray,ruby25
      SUBDIR += ruby-ncurses,ruby24
      SUBDIR += ruby-ncurses,ruby25
+     SUBDIR += ruby-nio4r,ruby24
+     SUBDIR += ruby-nio4r,ruby25
      SUBDIR += ruby-ole
      SUBDIR += ruby-open4
      SUBDIR += ruby-polyglot
