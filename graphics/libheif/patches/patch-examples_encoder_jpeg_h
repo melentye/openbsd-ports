@@ -1,0 +1,17 @@
+$OpenBSD$
+
+A weird situation where config.h in the package defines HAVE_{STDDEF,STDLIB}_H
+as 1 but one of the included headers simply defines it.
+
+Index: examples/encoder_jpeg.h
+--- examples/encoder_jpeg.h.orig
++++ examples/encoder_jpeg.h
+@@ -24,6 +24,8 @@
+ #include <stddef.h>
+ #include <stdio.h>
+ 
++#undef HAVE_STDDEF_H
++#undef HAVE_STDLIB_H
+ #include <jpeglib.h>
+ 
+ #include <string>

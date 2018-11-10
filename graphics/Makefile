@@ -134,6 +134,7 @@
      SUBDIR += libdvbpsi
      SUBDIR += libexif
      SUBDIR += libexif-gtk
+     SUBDIR += libheif
      SUBDIR += libgexiv2
      SUBDIR += libgphoto2
      SUBDIR += libgxps
