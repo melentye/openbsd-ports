@@ -1,7 +1,7 @@
 #! /usr/bin/perl
 
 # ex:ts=8 sw=4:
-# $OpenBSD: Quirks.pm,v 1.655 2018/11/09 21:22:17 jeremy Exp $
+# $OpenBSD: Quirks.pm,v 1.658 2018/11/13 05:15:55 bentley Exp $
 #
 # Copyright (c) 2009 Marc Espie <espie@openbsd.org>
 #
@@ -284,6 +284,7 @@ my $stem_extensions = {
 	'sdlmess' => 'mame',
 # 6.5
 	'ValyriaTear' => 'valyriatear',
+	'apertium-es-ast_NO-PN' => 'apertium-es-ast',
 };
 
 my $obsolete_reason = {
@@ -1176,6 +1177,7 @@ my $cve = {
 	'devel/git,-main' => 'git-<2.19.1',
 	'devel/git,-svn' => 'git-svn-<2.19.1',
 	'devel/git,-x11' => 'git-x11-<2.19.1',
+	'devel/libgit2/libgit2' => 'libgit2-<0.27.7',
 	'devel/mercurial,-main' => 'mercurial-<4.5.3p1',
 	'devel/mercurial,-x11' => 'mercurial-x11-<4.5.3p1',
 	'devel/pcre' => 'pcre-<8.38',
@@ -1217,6 +1219,7 @@ my $cve = {
 	'www/drupal7/theme-newsflash' => 'drupal7-theme-newsflash-<2.5',
 	'www/iridium' => 'iridium-<2018.5.67',
 	'www/mozilla-firefox' => 'firefox-<62.0.2p0',
+	'www/nginx' => 'nginx-<1.4.1',
 	'www/p5-CGI-Application' => 'p5-CGI-Application-<4.50p0',
 	'www/py-requests' => 'py-requests-<2.20.0',
 	'www/py-requests,python3' => 'py3-requests-<2.20.0',

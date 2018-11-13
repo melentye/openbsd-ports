@@ -1,4 +1,4 @@
-# $OpenBSD: Var.pm,v 1.26 2018/05/26 14:20:43 espie Exp $
+# $OpenBSD: Var.pm,v 1.28 2018/11/10 17:12:24 espie Exp $
 #
 # Copyright (c) 2006-2010 Marc Espie <espie@openbsd.org>
 #
@@ -659,9 +659,11 @@ sub new
 		$readme .= $multi;
 	}
 	if (-e $readme) {
+		$readme =~ s,^\Q$portsdir\E/,,;
 		$path->{info}->create('README', $readme, $arch, $path);
 	}
 
+	$value =~ s,^\Q$portsdir\E/,,;
 	return $class->SUPER::new($var, $value, $arch, $path);
 }
 
