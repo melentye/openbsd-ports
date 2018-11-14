@@ -1,12 +1,4 @@
 @comment $OpenBSD: PLIST,v$
-@bin bin/acceleration_speed
-@bin bin/bjoentegaard
-@bin bin/block-rate-estim
-@bin bin/enc265
-@bin bin/gen-enc-table
-@bin bin/rd-curves
-@bin bin/tests
-@bin bin/yuv-distortion
 include/libde265/
 include/libde265/de265-version.h
 include/libde265/de265.h

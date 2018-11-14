@@ -1,24 +1,34 @@
 # $OpenBSD: Makefile.template,v 1.78 2018/07/09 15:00:06 jca Exp $
 
-COMMENT =	open h.265 video codec implementation
 V =		1.0.3
-DISTNAME =	libde265-$V
-
-SHARED_LIBS =	de265                0.10     # 0.10
-
+COMMENT =	open h.265 video codec implementation
+DISTNAME =	libde265-${V}
 CATEGORIES =	graphics
+
+SHARED_LIBS +=	de265                     0.0 # 0.10
+
 HOMEPAGE =	https://github.com/strukturag/libde265
 
-# LGPLv3
-PERMIT_PACKAGE_CDROM =	Yes
+MAINTAINER =	Andrey Melentyev <andrey.melentyev@gmail.com>
 
-WANTLIB	+=		c m ${COMPILER_LIBCXX}
+# LGPLv3+
+PERMIT_PACKAGE_CDROM =	patents
+PERMIT_PACKAGE_FTP =	Yes
 
-MASTER_SITES =		https://github.com/strukturag/libde265/releases/download/v$V/
+WANTLIB += ${COMPILER_LIBCXX} m
+
+MASTER_SITES =	https://github.com/strukturag/libde265/releases/download/v${V}/
+
+COMPILER =		base-clang
 
 SEPARATE_BUIILD =	Yes
+
 CONFIGURE_STYLE =	gnu
 CONFIGURE_ARGS =	--disable-dec265 \
 			--disable-sherlock265
+
+# Remove all these (test?) programs.
+post-install:
+	@rm -f ${PREFIX}/bin/*
 
 .include <bsd.port.mk>
