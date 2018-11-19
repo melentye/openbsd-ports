@@ -1,6 +1,6 @@
 #-*- mode: Makefile; tab-width: 4; -*-
 # ex:ts=4 sw=4 filetype=make:
-#	$OpenBSD: bsd.port.mk,v 1.1451 2018/11/05 15:59:17 espie Exp $
+#	$OpenBSD: bsd.port.mk,v 1.1456 2018/11/16 18:14:08 espie Exp $
 #
 #	bsd.port.mk - 940820 Jordan K. Hubbard.
 #	This file is in the public domain.
@@ -58,6 +58,18 @@ ERRORS += "Fatal: Use 'env SUBPACKAGE=${SUBPACKAGE} ${MAKE}' instead."
 ERRORS += "Fatal: inclusion of bsd.port.mk from $f"
 .  endif
 .endfor
+
+# hook to allow scripts to query bsd.port.mk without having a valid port
+.if defined(DUMMY_PACKAGE)
+COMMENT ?= 				dummy
+CATEGORIES ?= 			dummy
+PKGPATH ?= 				dummy/a
+DISTNAME ?= 			dummy
+PERMIT_PACKAGE_CDROM ?= Yes
+IGNORE ?=				Yes
+_MAKEFILE_INC_DONE ?=	Yes
+ECHO_MSG ?=				:
+.endif
 
 # include guard so that other parts don't include this twice
 _BSD_PORT_MK = Done
@@ -118,7 +130,8 @@ _ALL_VARIABLES += HOMEPAGE DISTNAME \
 	MAINTAINER AUTOCONF_VERSION AUTOMAKE_VERSION CONFIGURE_ARGS \
 	GH_ACCOUNT GH_COMMIT GH_PROJECT GH_TAGNAME PORTROACH \
 	PORTROACH_COMMENT MAKEFILE_LIST USE_LLD USE_WXNEEDED COMPILER \
-	COMPILER_LANGS COMPILER_LINKS SUBST_VARS UPDATE_PLIST_ARGS
+	COMPILER_LANGS COMPILER_LINKS SUBST_VARS UPDATE_PLIST_ARGS \
+	PKGPATHS
 _ALL_VARIABLES_PER_ARCH += BROKEN
 # and stuff needing to be MULTI_PACKAGE'd
 _ALL_VARIABLES_INDEXED += COMMENT PKGNAME \
@@ -134,7 +147,6 @@ PORTROACH ?=
 
 # Global path locations.
 PORTSDIR ?= /usr/ports
-LOCALBASE ?= /usr/local
 X11BASE ?= /usr/X11R6
 VARBASE ?= /var
 DISTDIR ?= ${PORTSDIR}/distfiles
@@ -3119,60 +3131,6 @@ _internal-clean:
 .  endfor
 .endif
 
-# This target generates an index entry suitable for aggregation into
-# a large index.  Format is:
-#
-# distribution-name|port-path|installation-prefix|comment| \
-#  description-file|maintainer|categories|lib-deps|build-deps|run-deps| \
-#  for-arch|package-cdrom|package-ftp|distfiles-ftp
-#
-describe:
-.for _S in ${MULTI_PACKAGES}
-	@echo -n "${FULLPKGNAME${_S}}|${FULLPKGPATH${_S}}|"
-.  if ${PREFIX${_S}} == ${LOCALBASE}
-	@echo -n "|"
-.  else
-	@echo -n "${PREFIX${_S}}|"
-.  endif
-	@echo -n ${_COMMENT${_S}:S/^"//:S/"$//:S/^'//:S/'$//:Q}"|"; \
-	if [ -f ${DESCR${_S}} ]; then \
-		echo -n `PORTSDIR_PATH=${PORTSDIR_PATH} ${_PERLSCRIPT}/port-getpkgpath-helper ${DESCR${_S}}`'|';  \
-	else \
-		echo -n "/dev/null|"; \
-	fi; \
-	echo -n "${MAINTAINER}|${CATEGORIES${_S}}|"
-.  for _d in LIB BUILD RUN
-	@echo -n '${_${_d}_DEP3${_S}:C/ +/ /g}'| tr '\040' '\012'|sort -u|tr '\012' '\040' | sed -e 's, $$,,'
-	@echo -n '|'
-.  endfor
-.  if defined(ONLY_FOR_ARCHS${_S})
-	@echo -n "${ONLY_FOR_ARCHS${_S}}|"
-.  elif defined(NOT_FOR_ARCHS${_S})
-	@echo -n "!${NOT_FOR_ARCHS${_S}}|"
-.  else
-	@echo -n "any|"
-.  endif
-.  if defined(_BAD_LICENSING)
-	@echo "?|?|?|?"
-.  else
-.    if ${PERMIT_PACKAGE_CDROM${_S}:L} == "yes"
-	@echo -n "y|"
-.    else
-	@echo -n "n|"
-.    endif
-.    if ${PERMIT_PACKAGE_FTP${_S}:L} == "yes"
-	@echo -n "y|"
-.    else
-	@echo -n "n|"
-.    endif
-.    if ${PERMIT_DISTFILES_FTP:L} == "yes"
-	@echo "y"
-.    else
-	@echo "n"
-.    endif
-.  endif
-.endfor
-
 print-build-depends:
 .if !empty(_BUILD_DEP)
 	@echo -n 'This port requires package(s) "'
@@ -3502,6 +3460,11 @@ regen:
 	@${_PBUILD} rm -f ${_GEN_COOKIE}
 	@${_MAKE} gen
 
+reprepare:
+	@${_PBUILD} rm -f ${_DEPBUILD_COOKIES} ${_DEPBUILDLIB_COOKIES} \
+		${_DEPBUILDWANTLIB_COOKIE}
+	@${_MAKE} prepare
+
 uninstall deinstall:
 	@${ECHO_MSG} "===> Deinstalling for ${FULLPKGNAME${SUBPACKAGE}}"
 	@${SUDO} ${_PKG_DELETE} ${FULLPKGNAME${SUBPACKAGE}}
@@ -3560,7 +3523,7 @@ _all_phony = ${_recursive_depends_targets} \
 	post-distpatch post-extract post-install \
 	post-patch post-test pre-build pre-configure pre-extract pre-fake \
 	pre-install pre-patch pre-test prepare \
-	print-build-depends print-run-depends rebuild regen \
+	print-build-depends print-run-depends rebuild regen reprepare \
 	test-depends test-depends-list run-depends-list \
     show-required-by subpackage uninstall _print-metadata \
 	run-depends-args lib-depends-args all-lib-depends-args wantlib-args \
