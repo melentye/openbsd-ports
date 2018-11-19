@@ -1,0 +1,14 @@
+$OpenBSD$
+
+Index: util/semaphore.cc
+--- util/semaphore.cc.orig
++++ util/semaphore.cc
+@@ -36,7 +36,7 @@ void Semaphore::Wait() {
+   }
+ }
+ 
+-#elif defined(OS_LINUX) || defined(OS_AIX)
++#elif defined(OS_LINUX) || defined(OS_AIX) || defined(OS_BSD)
+ 
+ Semaphore::Semaphore(int count) {
+   DCHECK_GE(count, 0);

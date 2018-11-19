@@ -1,0 +1,14 @@
+$OpenBSD$
+
+Index: tools/gn/args.cc
+--- tools/gn/args.cc.orig
++++ tools/gn/args.cc
+@@ -296,6 +296,8 @@ void Args::SetSystemVarsLocked(Scope* dest) const {
+   os = "linux";
+ #elif defined(OS_AIX)
+   os = "aix";
++#elif defined(OS_OPENBSD)
++  os = "openbsd";
+ #else
+ #error Unknown OS type.
+ #endif

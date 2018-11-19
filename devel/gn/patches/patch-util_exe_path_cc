@@ -1,0 +1,60 @@
+$OpenBSD$
+
+Index: util/exe_path.cc
+--- util/exe_path.cc.orig
++++ util/exe_path.cc
+@@ -13,6 +13,12 @@
+ #include <mach-o/dyld.h>
+ #elif defined(OS_WIN)
+ #include <windows.h>
++#elif defined(OS_OPENBSD)
++#include <limits.h>
++#include <stdlib.h>
++#include <unistd.h>
++#include <sys/sysctl.h>
++#include <sys/stat.h>
+ #endif
+ 
+ #if defined(OS_MACOSX)
+@@ -44,6 +50,41 @@ base::FilePath GetExePath() {
+     return base::FilePath();
+   }
+   return base::FilePath(system_buffer);
++}
++
++#elif defined(OS_OPENBSD)
++
++base::FilePath GetExePath() {
++  base::FilePath path = base::FilePath();
++  int mib[] = { CTL_KERN, KERN_PROC_ARGS, getpid(), KERN_PROC_ARGV };
++  size_t len;
++  char **argv = NULL;
++  char *exec_path = NULL;
++
++  if (sysctl(mib, 4, NULL, &len, NULL, 0) == -1) {
++    goto exit;
++  }
++
++  if (!(argv = (char **)malloc(len))) {
++    goto exit;
++  }
++
++  if (sysctl(mib, 4, argv, &len, NULL, 0) == -1) {
++    goto exit;
++  }
++
++  if (!(exec_path = (char *)malloc(PATH_MAX + 1))) {
++    goto exit;
++  }
++
++  realpath(*argv, exec_path);
++  path = base::FilePath(exec_path);
++
++  exit:
++  if (exec_path) free(exec_path);
++  if (argv) free(argv);
++
++  return path;
+ }
+ 
+ #else
