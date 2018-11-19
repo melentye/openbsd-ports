@@ -19,7 +19,7 @@ WANTLIB += ${COMPILER_LIBCXX} m
 
 MASTER_SITES =	https://github.com/strukturag/libde265/releases/download/v${V}/
 
-COMPILER =		base-clang
+COMPILER =		base-clang ports-gcc
 
 SEPARATE_BUIILD =	Yes
 
