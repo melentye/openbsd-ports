@@ -1,0 +1,26 @@
+$OpenBSD$
+
+- pthread_np.h doesn't seem to be required on OpenBSD
+- OpenBSD supports pthread_self to get the current thread ID
+
+Index: dlls/ntdll/server.c
+--- dlls/ntdll/server.c.orig
++++ dlls/ntdll/server.c
+@@ -31,7 +31,7 @@
+ #ifdef HAVE_LWP_H
+ #include <lwp.h>
+ #endif
+-#ifdef HAVE_PTHREAD_NP_H
++#if defined(HAVE_PTHREAD_NP_H) && !defined(__OpenBSD__)
+ # include <pthread_np.h>
+ #endif
+ #include <signal.h>
+@@ -1344,7 +1344,7 @@ static int get_unix_tid(void)
+     ret = pthread_getthreadid_np();
+ #elif defined(linux)
+     ret = syscall( __NR_gettid );
+-#elif defined(__sun)
++#elif defined(__sun) || defined(__OpenBSD__)
+     ret = pthread_self();
+ #elif defined(__APPLE__)
+     ret = mach_thread_self();

@@ -1,0 +1,56 @@
+$OpenBSD$
+
+add OpenBSD-specific bits
+
+Index: dlls/ntdll/signal_x86_64.c
+--- dlls/ntdll/signal_x86_64.c.orig
++++ dlls/ntdll/signal_x86_64.c
+@@ -242,7 +242,39 @@ static inline int arch_prctl( int func, void *ptr ) { 
+ #define ERROR_sig(context)  ((context)->uc_mcontext.__gregs[_REG_ERR])
+ 
+ #define FPU_sig(context)   ((XMM_SAVE_AREA32 *)((context)->uc_mcontext.__fpregs))
++
++#elif defined(__OpenBSD__)
++
++#define RAX_sig(context)     ((context)->sc_rax)
++#define RBX_sig(context)     ((context)->sc_rbx)
++#define RCX_sig(context)     ((context)->sc_rcx)
++#define RDX_sig(context)     ((context)->sc_rdx)
++#define RSI_sig(context)     ((context)->sc_rsi)
++#define RDI_sig(context)     ((context)->sc_rdi)
++#define RBP_sig(context)     ((context)->sc_rbp)
++#define R8_sig(context)      ((context)->sc_r8)
++#define R9_sig(context)      ((context)->sc_r9)
++#define R10_sig(context)     ((context)->sc_r10)
++#define R11_sig(context)     ((context)->sc_r11)
++#define R12_sig(context)     ((context)->sc_r12)
++#define R13_sig(context)     ((context)->sc_r13)
++#define R14_sig(context)     ((context)->sc_r14)
++#define R15_sig(context)     ((context)->sc_r15)
++
++#define CS_sig(context)      ((context)->sc_cs)
++#define GS_sig(context)      ((context)->sc_gs)
++#define FS_sig(context)      ((context)->sc_fs)
++
++#define RSP_sig(context)     ((context)->sc_rsp)
++#define RIP_sig(context)     ((context)->sc_rip)
++#define EFL_sig(context)     ((context)->sc_rflags)
++#define TRAP_sig(context)    ((context)->sc_trapno)
++#define ERROR_sig(context)   ((context)->sc_err)
++
++#define FPU_sig(context)     ((XMM_SAVE_AREA32 *)((context)->sc_fpstate))
++
+ #elif defined (__APPLE__)
++
+ #define RAX_sig(context)     ((context)->uc_mcontext->__ss.__rax)
+ #define RBX_sig(context)     ((context)->uc_mcontext->__ss.__rbx)
+ #define RCX_sig(context)     ((context)->uc_mcontext->__ss.__rcx)
+@@ -3373,6 +3405,8 @@ void signal_init_thread( TEB *teb )
+     amd64_set_gsbase( teb );
+ #elif defined(__NetBSD__)
+     sysarch( X86_64_SET_GSBASE, &teb );
++#elif defined(__OpenBSD__)
++#error "TODO"
+ #elif defined (__APPLE__)
+     __asm__ volatile (".byte 0x65\n\tmovq %0,%c1"
+                       :

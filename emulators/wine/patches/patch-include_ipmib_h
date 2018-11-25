@@ -1,0 +1,24 @@
+$OpenBSD$
+
+enum ICMP_TYPE members clash with defines in netinet/icmp6.h while having the
+same values
+
+Index: include/ipmib.h
+--- include/ipmib.h.orig
++++ include/ipmib.h
+@@ -216,6 +216,7 @@ typedef enum
+     ICMP4_MASK_REPLY        = 18,
+ } ICMP4_TYPE, *PICMP4_TYPE;
+ 
++#if !defined(__OpenBSD__)
+ typedef enum
+ {
+     ICMP6_DST_UNREACH          =   1,
+@@ -234,6 +235,7 @@ typedef enum
+     ND_REDIRECT                = 137,
+     ICMP6_V2_MEMBERSHIP_REPORT = 143,
+ } ICMP6_TYPE, *PICMP6_TYPE;
++#endif
+ 
+ typedef struct _MIBICMPSTATS_EX
+ {
