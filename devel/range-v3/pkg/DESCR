@@ -1,0 +1,13 @@
+Range library for C++11/14/17. This code is the basis of a formal proposal to
+add range support to the C++ standard library.
+
+Why does C++ need another range library? Simply put, the existing solutions
+haven't kept up with the rapid evolution of C++. Range v3 is a library for the
+future C++. Not only does it work well with today's C++ -- move semantics,
+lambdas, automatically deduced types and all -- it also anticipates tomorrow's
+C++ with Concepts.
+
+Range v3 forms the basis of a proposal to add range support to the standard
+library (N4128: Ranges for the Standard Library). It also will be the reference
+implementation for an upcoming Technical Specification. These are the first
+steps toward turning ranges into an international standard.
